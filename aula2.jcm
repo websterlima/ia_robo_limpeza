@@ -9,8 +9,8 @@
 */
 
 mas aula2 {
-
-    agent sample_agent
+	agent cleaner
+	agent explorer
     
 /* 
    agent definition
@@ -124,4 +124,3 @@ mas aula2 {
        nodes not defined will be launched when this .jcm is run
     */
 }
-

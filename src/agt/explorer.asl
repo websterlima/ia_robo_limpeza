@@ -2,15 +2,14 @@
 
 /* Initial beliefs and rules */
 
-/* Initial goals */
 
-rooms(20).
+/* Initial goals */
 
 !start.
 
 /* Plans */
 
-+!start : rooms(X) <- makeArtifact("rooms", "aula2.Rooms", [X], ID);
++!start <- makeArtifact("rooms", "aula2.Rooms", [4, 4], ID);
                   focus(ID);
                   !searchTrash.
                   
@@ -19,14 +18,15 @@ rooms(20).
                  .wait(1000);
                  !searchTrash.
                  
-+!move: at(X) & X == 0 <- .println("Moving to room ", X + 1);
-                          goRight.
++!move : at(X) & direction("right") <- .println("Moving to room ", X + 1);
+                          goRightDirection.
 
-+!move: at(X) & X == 1 <- .println("Moving to room ", X - 1);
-                          goLeft.
-                          
-+dirty: at(X) <- .println("Cleaning room ", X);
-                 clean.
++!move : at(X) & direction("left") <- .println("Moving to room ", X - 1);
+                          goLeftDirection.
+
++dirty : at(X) <- .send(cleaner, achieve, clearRoom(X)).
+
++closed : at(X) <- .print("Room ", X, " is closed").
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
